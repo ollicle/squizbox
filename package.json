@@ -4,6 +4,7 @@
   "description": "playing with svelte.technology",
   "main": "index.js",
   "scripts": {
+  	"build": "svelte compile --format iife ./src/Squizbox.html > index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Oliver Boermans <ollie@ollicle.com>",
