@@ -4,7 +4,6 @@
   "description": "playing with svelte.technology",
   "main": "index.js",
   "scripts": {
-    "build": "svelte compile --format iife ./src/Squizbox.html > ./build/squizbox.js",
     "bundle": "webpack --display-error-details",
     "test": "npm run selenium",
     "selenium": "node ./test/selenium-config.js"
