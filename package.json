@@ -6,7 +6,8 @@
   "scripts": {
     "build": "svelte compile --format iife ./src/Squizbox.html > ./build/squizbox.js",
     "bundle": "webpack --display-error-details",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run selenium",
+    "selenium": "node ./test/selenium-config.js"
   },
   "author": "Oliver Boermans <ollie@ollicle.com>",
   "license": "ISC",
@@ -14,8 +15,11 @@
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
+    "geckodriver": "^1.6.1",
+    "selenium-standalone": "^6.4.1",
     "svelte-cli": "^1.3.6",
     "svelte-loader": "^2.0.1",
+    "webdriverio": "^4.8.0",
     "webpack": "^2.5.0"
   }
 }
