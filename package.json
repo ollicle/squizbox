@@ -4,9 +4,12 @@
   "description": "playing with svelte.technology",
   "main": "index.js",
   "scripts": {
-    "bundle": "webpack --display-error-details",
-    "test": "npm run selenium",
-    "selenium": "node ./test/selenium-config.js"
+    "start": "npm run webpack-serve",
+    "selenium-start": "selenium-standalone start",
+    "test": "npm run selenium-run",
+    "selenium-install": "selenium-standalone install",
+    "selenium-run": "node ./test/index.js",
+    "webpack-serve": "webpack-dev-server"
   },
   "author": "Oliver Boermans <ollie@ollicle.com>",
   "license": "ISC",
@@ -14,11 +17,13 @@
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
-    "geckodriver": "^1.6.1",
-    "selenium-standalone": "^6.4.1",
+    "geckodriver": "^1.7.1",
+    "http-server": "^0.10.0",
+    "selenium-standalone": "^6.5.0",
     "svelte-cli": "^1.3.6",
     "svelte-loader": "^2.0.1",
     "webdriverio": "^4.8.0",
-    "webpack": "^2.5.0"
+    "webpack": "^2.5.0",
+    "webpack-dev-server": "^2.5.1"
   }
 }
