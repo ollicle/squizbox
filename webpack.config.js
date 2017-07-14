@@ -5,9 +5,6 @@ module.exports = {
   entry: {
     'index': [ './src/index.js' ]
 },
-// 	plugins: [
-// 		new webpack.HotModuleReplacementPlugin()
-// 	],
   resolve: {
     extensions: [ '.js', '.html' ]
 },
@@ -34,14 +31,14 @@ module.exports = {
     ]
   },
 	devtool: 'inline-source-map',
-	devServer: {
-// 		hot: true, // Tell the dev-server we're using HMR
-// 		contentBase: path.resolve(__dirname, 'build'),
-		compress: true,
-// 		https: true,
-		publicPath: './build/',
-		host: '192.168.178.26',
-		port: 3333,
-		public: '192.168.178.26:3333'
-  }
- }
+// 	devServer: {
+// 		compress: true,
+// // 		https: true,
+// 		publicPath: './build/',
+// 		host: '192.168.178.26',
+// 		port: 3333
+// // 		,
+// // 		public: '192.168.178.26:3333'
+//   },
+  watch: true
+}
