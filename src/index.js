@@ -1,6 +1,8 @@
 // import 'babel-polyfill';
 import Squizbox from './squizbox';
 
+document.body.innerHTML = '';
+
 const squiz = new Squizbox({
   // `target` is the only required option – the element
   // to render the component to
@@ -8,9 +10,11 @@ const squiz = new Squizbox({
 
   // `data` is optional. A component can also have
   // default data – we'll learn about that later.
-  data: { name: 'Ollie' },
-  
-  oncreate () {
-  	document.body.innerHTML = '';
-  }
+  data: { name: 'Ollie' }
+
+//	not executed:
+//  , oncreate: function () {
+//   	console.log('oncreate');
+//   	document.body.innerHTML = '';
+//   }
 });
