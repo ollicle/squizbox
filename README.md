@@ -2,7 +2,8 @@
 
 ## Why?
 
-No reason yet - doesn’t do anything yet.
+No reason - doesn’t do anything yet.
+Won’t work for you without messing with urls in scripts.
 
 ## Getting started
 
@@ -16,11 +17,15 @@ Note: when updating selenium drivers update the browsers alongside them
 
 		npm run selenium-install
 
-3. Bundle script and start Webpack server
+3. Bundle script and start watcher
 
 		npm start
 
-4. Start selenium server
+4. Start webserver
+
+		npm run serve
+
+5. Start selenium server
 
 	In a new console
 
@@ -43,4 +48,5 @@ Click the exit button
 
 ## wishes
 
+- Remove hard coded local url from scripts
 - reload re-generated build in open selenium session
