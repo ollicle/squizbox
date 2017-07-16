@@ -1,12 +1,32 @@
 // import 'babel-polyfill';
 import Squizbox from './squizbox';
 
-//	Gather styles
 import stylesheets from './collectStylesheets';
+import breakpoints from './collectBreakpoints';
+import pairMinMax from './pairMinMax';
+import sortByWidth from './sortByWidth';
 
-console.log(stylesheets(document));
+const objectToArray = function (obj) {
+	return Object.getOwnPropertyNames(obj).map(function(point){
+		return obj[point];
+	});
+};
 
-//	Strip out head styles
+const sheets = stylesheets(document);
+const breaks = breakpoints(sheets);
+const points = objectToArray(breaks).sort(sortByWidth);
+const pairs = pairMinMax(points);
+
+//	Gather styles
+// console.log('sheets',sheets);
+// console.log('breakpoints',breaks);
+// console.log('points',points);
+console.log('pairs',pairs);
+
+
+//	Strip out stylesheet links
+[].slice.call(document.getElementsByTagName('link')).forEach((x)=> {x.remove()});
+
 
 //	Wipe out document
 document.body.innerHTML = '';
@@ -19,6 +39,9 @@ const squiz = new Squizbox({
 
   // `data` is optional. A component can also have
   // default data – we'll learn about that later.
-  data: { name: 'Ollie' }
+  data: {
+	breakpoints: pairs,
+	selectWidth: '100%'
+	}
 
 });

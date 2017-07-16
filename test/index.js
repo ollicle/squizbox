@@ -21,5 +21,5 @@ browser
 				done();
 			}, false);
             document.body.insertBefore(exit, document.body.firstChild);
-        }, 30, done);
+        }, 300, done);
     }).end();
