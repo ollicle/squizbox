@@ -27,21 +27,22 @@ console.log('pairs',pairs);
 //	Strip out stylesheet links
 [].slice.call(document.getElementsByTagName('link')).forEach((x)=> {x.remove()});
 
+//	Strip out style elements
 
 //	Wipe out document
 document.body.innerHTML = '';
 
 //	Load component
 const squiz = new Squizbox({
-  // `target` is the only required option – the element
-  // to render the component to
-  target: document.querySelector( 'body' ),
+	// `target` is the only required option – the element
+	// to render the component to
+	target: document.querySelector( 'body' ),
 
-  // `data` is optional. A component can also have
-  // default data – we'll learn about that later.
-  data: {
-	breakpoints: pairs,
-	selectWidth: '100%'
+	// `data` is optional. A component can also have
+	// default data – we'll learn about that later.
+	data: {
+		breakpoints: pairs,
+		iframeWidth: '1024'
 	}
-
 });
+

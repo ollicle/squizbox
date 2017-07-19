@@ -1,3 +1,5 @@
+<:Window bind:innerWidth='viewportWidth'/>
+
 <div id="breakpoints">
 	<style type="text/css">
 	body {margin: 0}
@@ -10,7 +12,7 @@
 		{{#if pair.max}}
 		<div class="breakpoint-max" style="background-size:{{pair.max.width}} 100%"></div>
 		{{/if}}
-		<button class="select-button" type="button" on:click="select( pair )">
+		<button class="select-button" type="button" on:click="set({ iframeWidth: pair.pixels })">
 			{{#if pair.min}}min: {{pair.min.width}} {{/if}}
 			{{#if pair.max}}max: {{pair.max.width}} {{/if}}
 		</button>
@@ -18,13 +20,13 @@
 	{{/each}}
 </div>
 
-<div ref:upperIframeWrap class="iframe-wrapper" style="">
+<div ref:upperIframeWrap class="iframe-wrapper" style="width: {{iframeWidth}}px">
 	<iframe class="iframe" ref:upperIframe src="?"></iframe>
 </div>
+<label for="resizer">Viewport width</label> <input type="number" bind:value="iframeWidth" />
+<input id="resizer" class="resizer" ref:resizer type="range" min="0" max="{{viewportWidth}}" step="1" bind:value="iframeWidth" />
 
-<input ref:resizer type="range" min="0" max="VIEWPORT_WIDTH" step="1" value="IFRAME_WIDTH" />
-
-<div ref:lowerIframeWrap class="iframe-wrapper" style="width: calc({{selectWidth}} - 1px)">
+<div ref:lowerIframeWrap class="iframe-wrapper" style="width: calc({{iframeWidth}}px - 1px)">
 	<iframe class="iframe" ref:lowerIframe src="?"></iframe>
 </div>
 
@@ -87,17 +89,17 @@
 		border: none;
 	}
 
+	.resizer {
+		width: 100%;
+		margin: 0;
+	}
+
 </style>
 
 <script>
 	export default {
 		oncreate () {
 
-		},
-		methods: {
-			select: function (breakpoint) {
-				console.log('select', breakpoint);
-			}
 		}
 	};
 </script>
