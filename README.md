@@ -5,7 +5,7 @@
 No reason - doesn’t do anything yet.
 Won’t work for you without messing with urls in scripts.
 
-## Getting started
+## Development set-up
 
 Note: when updating selenium drivers update the browsers alongside them
 
@@ -43,10 +43,11 @@ Click the exit button
 
 ## todo
 
-- generate bookmarklet script and page to install it
-- write the bookmarklet script
+- cross convert breakpoints in em/rem with pixels
+- breakpoint selection and edit
+- easy access to edited values (before and after perhaps)
 
 ## wishes
 
-- Remove hard coded local url from scripts
-- reload re-generated build in open selenium session
+- Remove hard coded local urls from scripts
+- reload re-generated build within initial selenium session
