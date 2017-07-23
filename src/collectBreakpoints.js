@@ -63,6 +63,8 @@ export default function (stylesheets) {
 			var pixels = +parts.value;
 			
 			var mediaRule = {
+				value: +parts.value,
+				unit: parts.unit,
 				width: width,
 				pixels: pixels,
 				rules: [rule],

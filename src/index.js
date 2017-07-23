@@ -42,7 +42,8 @@ const squiz = new Squizbox({
 	// default data – we'll learn about that later.
 	data: {
 		breakpoints: pairs,
-		iframeWidth: '1024'
+		iframeWidth: '1024',
+		selected: 'hi'
 	}
 });
 

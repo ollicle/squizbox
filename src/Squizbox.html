@@ -4,19 +4,9 @@
 	<style type="text/css">
 	body {margin: 0}
 	</style>
+
 	{{#each breakpoints as pair}}
-	<div class="breakpoint">
-		{{#if pair.min}}
-		<div class="breakpoint-min" style="background-size:{{pair.min.width}} 100%"></div>
-		{{/if}}
-		{{#if pair.max}}
-		<div class="breakpoint-max" style="background-size:{{pair.max.width}} 100%"></div>
-		{{/if}}
-		<button class="select-button" type="button" on:click="set({ iframeWidth: pair.pixels })">
-			{{#if pair.min}}min: {{pair.min.width}} {{/if}}
-			{{#if pair.max}}max: {{pair.max.width}} {{/if}}
-		</button>
-	</div>
+		<Breakpoint selected="false" minWidth="{{pair.min && pair.min.width}}" maxWidth="{{pair.max && pair.max.width}}" />
 	{{/each}}
 </div>
 
@@ -30,52 +20,36 @@
 	<iframe class="iframe" ref:lowerIframe src="?"></iframe>
 </div>
 
+<script>
+	import Breakpoint from './Breakpoint.html';
+
+	function maxOrMin (pair) {
+		return pair.min || pair.max;
+	}
+
+	function isSelected (pair) {
+// 		selected === pair.width ? 'is-selected' : '';
+		return '';
+	}
+
+	export default {
+		components: {
+			Breakpoint
+		},
+		helpers: {
+			maxOrMin,
+			isSelected
+		},
+		methods: {
+// 			select: function (width) {
+// 				console.log(width, this.get('selected'));
+//
+// 				this.set({selected: width});
+// 			}
+		}
+	};
+</script>
 <style>
-
-	.breakpoint {
-		position: relative;
-		text-align: center;
-		border-top: 1px solid #bbb;
-		border-bottom: 1px solid #bbb;
-		margin-bottom: 0.7rem;
-	}
-
-	.breakpoint-min {
-		height: 1rem;
-		background-position: 50% center;
-		background-repeat: no-repeat;
-		background-color: #eee;
-		background-image: linear-gradient(#ddd,#ddd);
-	}
-
-	.breakpoint-min.is-selected {
-		background-color: #CFFF70;
-		background-image: linear-gradient(#ccc,#ccc);
-	}
-
-	.breakpoint-max {
-		height: 1rem;
-		background-position: 50% center;
-		background-repeat: no-repeat;
-		background-color: #ddd;
-		background-image: linear-gradient(#eee,#eee);
-	}
-
-	.breakpoint-max.is-selected {
-		background-color: #ccc;
-		background-image: linear-gradient(#CFFF70,#CFFF70);
-	}
-
-	.select-button {
-		padding: 0.2rem 0.6rem;
-		border: 1px solid #aaa;
-		border-radius: 0px 0px 0.6rem 0.6rem;
-		background-color: #fff;
-		position: absolute;
-		top: -1px;
-		left: 50%;
-		transform: translate(-50%);
-	}
 
 	.iframe-wrapper {
 		margin: 1rem auto;
@@ -95,11 +69,3 @@
 	}
 
 </style>
-
-<script>
-	export default {
-		oncreate () {
-
-		}
-	};
-</script>
