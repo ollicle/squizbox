@@ -6,7 +6,14 @@
 	</style>
 
 	{{#each breakpoints as pair}}
-		<Breakpoint selected="false" minWidth="{{pair.min && pair.min.width}}" maxWidth="{{pair.max && pair.max.width}}" />
+		<Breakpoint
+			selected="false"
+			minWidth="{{pair.min && pair.min.width}}"
+			maxWidth="{{pair.max && pair.max.width}}"
+			value="{{ (pair.min||pair.max).value }}"
+			unit="{{ (pair.min||pair.max).unit }}"
+			on:select='selectBreakpoint( event.value, event.unit )'
+		/>
 	{{/each}}
 </div>
 
@@ -41,11 +48,11 @@
 			isSelected
 		},
 		methods: {
-// 			select: function (width) {
-// 				console.log(width, this.get('selected'));
-//
-// 				this.set({selected: width});
-// 			}
+			selectBreakpoint: function (value, unit) {
+				console.log('selectBreakpoint', value, unit, this.get('selected'));
+
+				this.set({iframeWidth: value});
+			}
 		}
 	};
 </script>

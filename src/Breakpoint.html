@@ -1,37 +1,21 @@
-<div class="breakpoint" on:click="select(maxOrMin(pair).width)">
+<div class="breakpoint">
 	{{#if minWidth}}
 	<div class="breakpoint-min {{isSelected}}" style="background-size:{{minWidth}} 100%"></div>
 	{{/if}}
 	{{#if maxWidth}}
 	<div class="breakpoint-max {{isSelected}}" style="background-size:{{maxWidth}} 100%"></div>
 	{{/if}}
-	<button class="select-button" type="button" on:click="set({ iframeWidth: maxOrMin(pair).value })">
+	<button class="select-button" type="button"  on:click='fire( "select", { value, unit } )'>
 		{{#if minWidth}}min: {{minWidth}} {{/if}}
 		{{#if maxWidth}}max: {{maxWidth}} {{/if}}
 	</button>
 </div>
 
 <script>
-	function maxOrMin (pair) {
-		return pair.min || pair.max;
-	}
-
-	function isSelected (pair) {
-// 		selected === pair.width ? 'is-selected' : '';
-		return '';
-	}
-
 	export default {
 		helpers: {
-			maxOrMin,
-			isSelected
 		},
 		methods: {
-			select: function (width) {
-				console.log(width, this.get('selected'));
-
-				this.set({selected: width});
-			}
 		}
 	};
 </script>
