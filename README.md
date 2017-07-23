@@ -40,6 +40,9 @@ In a third console
 
 Click the exit button
 
+## Next
+
+- create committed dist directory and make bookmarklet accessible online somehow
 
 ## todo
 
