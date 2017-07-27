@@ -12,6 +12,10 @@ const objectToArray = function (obj) {
 	});
 };
 
+const removeFromDom = function (tag) {
+	[].slice.call(document.getElementsByTagName(tag)).forEach((x)=> {x.remove()});
+};
+
 const sheets = stylesheets(document);
 const breaks = breakpoints(sheets);
 const points = objectToArray(breaks).sort(sortByWidth);
@@ -23,11 +27,11 @@ const pairs = pairMinMax(points);
 // console.log('points',points);
 console.log('pairs',pairs);
 
-
 //	Strip out stylesheet links
-[].slice.call(document.getElementsByTagName('link')).forEach((x)=> {x.remove()});
+removeFromDom('link');
 
-//	Strip out style elements
+//	Strip out inline stylesheets
+removeFromDom('style');
 
 //	Wipe out document
 document.body.innerHTML = '';
