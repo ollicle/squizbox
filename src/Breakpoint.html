@@ -1,9 +1,9 @@
 <div class="breakpoint">
 	{{#if minWidth}}
-	<div class="breakpoint-min {{isSelected}}" style="background-size:{{minWidth}} 100%"></div>
+	<div class="breakpoint-min {{isSelected ? 'is-selected' : ''}}" style="background-size:{{minWidth}} 100%"></div>
 	{{/if}}
 	{{#if maxWidth}}
-	<div class="breakpoint-max {{isSelected}}" style="background-size:{{maxWidth}} 100%"></div>
+	<div class="breakpoint-max {{isSelected ? 'is-selected' : ''}}" style="background-size:{{maxWidth}} 100%"></div>
 	{{/if}}
 	<button class="select-button" type="button"  on:click='fire( "select", { value, unit } )'>
 		{{#if minWidth}}min: {{minWidth}} {{/if}}

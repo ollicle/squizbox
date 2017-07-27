@@ -43,7 +43,7 @@ const squiz = new Squizbox({
 	data: {
 		breakpoints: pairs,
 		iframeWidth: '1024',
-		selected: 'hi'
+		selected: null
 	}
 });
 

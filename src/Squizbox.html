@@ -7,12 +7,12 @@
 
 	{{#each breakpoints as pair}}
 		<Breakpoint
-			selected="false"
+			isSelected="{{ pair===selected }}"
 			minWidth="{{pair.min && pair.min.width}}"
 			maxWidth="{{pair.max && pair.max.width}}"
 			value="{{ (pair.min||pair.max).value }}"
 			unit="{{ (pair.min||pair.max).unit }}"
-			on:select='selectBreakpoint( event.value, event.unit )'
+			on:select='selectBreakpoint( event.value, event.unit, pair )'
 		/>
 	{{/each}}
 </div>
@@ -34,24 +34,19 @@
 		return pair.min || pair.max;
 	}
 
-	function isSelected (pair) {
-// 		selected === pair.width ? 'is-selected' : '';
-		return '';
-	}
-
 	export default {
 		components: {
 			Breakpoint
 		},
 		helpers: {
-			maxOrMin,
-			isSelected
+			maxOrMin
 		},
 		methods: {
-			selectBreakpoint: function (value, unit) {
-				console.log('selectBreakpoint', value, unit, this.get('selected'));
+			selectBreakpoint: function (value, unit, pair) {
+				console.log('pair',pair);
 
-				this.set({iframeWidth: value});
+				this.set({iframeWidth: value, selected: pair});
+				console.log('selectBreakpoint', value, unit, this.get('selected'));
 			}
 		}
 	};
