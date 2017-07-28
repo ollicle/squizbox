@@ -1,0 +1,17 @@
+<span ref:element class="emsize"></span>
+<style>
+.emsize {
+	position: absolute;
+	visibility: hidden;
+	width: 1em;
+	font-size: 1em;
+	padding: 0;
+}
+</style>
+<script>
+  export default {
+    oncreate () {
+      this.set({size : this.refs.element.clientWidth });
+    }
+  };
+</script>

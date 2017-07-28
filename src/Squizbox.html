@@ -1,5 +1,7 @@
 <:Window bind:innerWidth='viewportWidth'/>
 
+<Em bind:size="emsize" />
+
 <div id="breakpoints">
 	<style type="text/css">
 	body {margin: 0}
@@ -28,14 +30,31 @@
 </div>
 
 <script>
+	import Em from './Em.html';
 	import Breakpoint from './Breakpoint.html';
 
 	function maxOrMin (pair) {
 		return pair.min || pair.max;
 	}
 
+	function emToPx (pixelsPerEm, ems) {
+		return ems * pixelsPerEm;
+	}
+
+	function pxToEm (pixelsPerEm, px) {
+		return px / pixelsPerEm;
+	}
+
+	function toPx (pixelsPerEm, value, unit) {
+		if (unit === 'px') {
+			return value;
+		}
+		return emToPx(pixelsPerEm, value);
+	}
+
 	export default {
 		components: {
+			Em,
 			Breakpoint
 		},
 		helpers: {
@@ -45,7 +64,10 @@
 			selectBreakpoint: function (value, unit, pair) {
 				console.log('pair',pair);
 
-				this.set({iframeWidth: value, selected: pair});
+				this.set({
+					iframeWidth: toPx(this.get('emsize'), value, unit),
+					selected: pair
+				});
 				console.log('selectBreakpoint', value, unit, this.get('selected'));
 			}
 		}
