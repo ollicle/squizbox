@@ -2,47 +2,51 @@ import deconstructDeclaration from './deconstructDeclaration';
 
 const extractWidth = /((min-|max-)width\s*:\s*)(\d+\.?\d*?)(px|em|rem)/gi;
 
-export default function (stylesheets) {
+const isNotLocal = function (sheet) {
+	return sheet.href && sheet.href.substr(0,4) === 'http';
+};
 
-	var rules = stylesheets.reduce(function (acc, sheet) {
-
-		//presuming width media queries are not at sheet level
-		console.log('sheet to consume:',sheet);
-		
-		//	Filter out inline or extension injected sheets
-		if (sheet.href && sheet.href.substr(0,4) !== 'http') {
-			console.log('inline or extension sheet',sheet);
-			return acc;
-		}
-		
+const isIterable = function(sheet) {
+	try {
 		//	Test and skip security error triggering styles
 		//	Firefox will throw this on cross domain CSS
-		try {
-		
-			if (!sheet.cssRules) {
-				console.log('probably not interesting',sheet);
-				return acc;
-			}
-		
-		} catch(error) {
-			if (error.name !== "SecurityError") {
-				debugger;
-				throw error;
-			}
-			return acc;
+		sheet.cssRules;
+		return true;
+	} catch(error) {
+		if (error.name !== "SecurityError") {
+			debugger;
+			throw error;
 		}
+		return false;
+	}
+}
 
-		
-		var sheetRules = [].slice.call(sheet.cssRules);
+const isMediaRule = function (ruleList) {
+	return !!(ruleList.media && ruleList.media.length);
+};
 
-		var mediaRuleSet = sheetRules.reduce(function(inner_acc, ruleList){
-			return ruleList.media && ruleList.media.length ? inner_acc.concat(ruleList.media) : inner_acc;
-		},[]);
+const makeArray = function (list) {
+	return [].slice.call(list);
+};
 
-		console.log('mediaRuleSet',mediaRuleSet)
+const extractMediaRules = function (acc, sheet) {
 
-		return mediaRuleSet.length ? acc.concat(mediaRuleSet) : acc;
-	},[]);
+	var mediaRuleSet = makeArray(sheet.cssRules)
+		.filter(isMediaRule).map((ruleList) => {
+			return ruleList.media;
+		});
+
+	console.log('mediaRuleSet',mediaRuleSet);
+
+	return mediaRuleSet.length ? acc.concat(mediaRuleSet) : acc;
+}
+
+export default function (stylesheets) {
+
+	var rules = stylesheets
+		.filter(isNotLocal)
+		.filter(isIterable)
+		.reduce(extractMediaRules,[]);
 
 	var breakpoints = rules.reduce(function(acc, rule) {
 	
