@@ -29,24 +29,27 @@ const makeArray = function (list) {
 	return [].slice.call(list);
 };
 
-const extractMediaRules = function (acc, sheet) {
+const getRules = function (sheet) {
+	return makeArray(sheet.cssRules);
+};
 
-	var mediaRuleSet = makeArray(sheet.cssRules)
-		.filter(isMediaRule).map((ruleList) => {
-			return ruleList.media;
-		});
+const flatten = function(a, b) {
+	return a.concat(b);
+};
 
-	console.log('mediaRuleSet',mediaRuleSet);
-
-	return mediaRuleSet.length ? acc.concat(mediaRuleSet) : acc;
-}
+const getMedia = function (ruleList) {
+	return ruleList.media;
+};
 
 export default function (stylesheets) {
 
 	var rules = stylesheets
 		.filter(isNotLocal)
 		.filter(isIterable)
-		.reduce(extractMediaRules,[]);
+		.map(getRules)
+		.reduce(flatten)
+		.filter(isMediaRule)
+		.map(getMedia);
 
 	var breakpoints = rules.reduce(function(acc, rule) {
 	
