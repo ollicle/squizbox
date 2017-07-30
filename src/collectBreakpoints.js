@@ -37,8 +37,16 @@ const flatten = function(a, b) {
 	return a.concat(b);
 };
 
+const dedupe = function (item, index, array) {
+	return array.indexOf(item) === index;
+};
+
 const getMedia = function (ruleList) {
 	return ruleList.media;
+};
+
+const getWidthRules = function (rule) {
+	return rule.mediaText.match(extractWidth);
 };
 
 export default function (stylesheets) {
@@ -51,6 +59,17 @@ export default function (stylesheets) {
 		.filter(isMediaRule)
 		.map(getMedia);
 
+	console.log('rules',rules);
+
+	var widths = rules
+		.map(getWidthRules)
+		.reduce(flatten)
+		.filter(dedupe);
+	//	.map(makeViewObject)
+	// TODO	Determine minimal object required for view
+	
+	console.log('widths',widths);
+	
 	var breakpoints = rules.reduce(function(acc, rule) {
 	
 		var ruleLengths = rule.mediaText.match(extractWidth);
