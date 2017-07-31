@@ -1,4 +1,6 @@
 import deconstructDeclaration from './deconstructDeclaration';
+import sortByWidth from './sortByWidth';
+import pairMinMax from './pairMinMax';
 
 const extractWidth = /((min-|max-)width\s*:\s*)(\d+\.?\d*?)(px|em|rem)/gi;
 
@@ -49,6 +51,22 @@ const getWidthRules = function (rule) {
 	return rule.mediaText.match(extractWidth);
 };
 
+const makeViewObject = function (rule) {
+	const parts = deconstructDeclaration(rule);
+	const width = parts.value + parts.unit;
+	const key = parts.minMax + width;
+	
+	// TODO	Determine minimal object required for view
+	return {
+		value: +parts.value,
+		pixels: +parts.value,
+		unit: parts.unit,
+		width: width,
+// 		rules: [rule],
+		minmax: parts.minMax
+	};
+};
+
 export default function (stylesheets) {
 
 	var rules = stylesheets
@@ -64,48 +82,11 @@ export default function (stylesheets) {
 	var widths = rules
 		.map(getWidthRules)
 		.reduce(flatten)
-		.filter(dedupe);
-	//	.map(makeViewObject)
-	// TODO	Determine minimal object required for view
+		.filter(dedupe)
+		.map(makeViewObject)
+		.sort(sortByWidth);
 	
 	console.log('widths',widths);
-	
-	var breakpoints = rules.reduce(function(acc, rule) {
-	
-		var ruleLengths = rule.mediaText.match(extractWidth);
-	
-		if (!ruleLengths) {
-			return acc;
-		}
-	
-		ruleLengths.forEach(function(rl){
-			var parts = deconstructDeclaration(rl);
-			var width = parts.value + parts.unit;
-			var key = parts.minMax + width;
-			
-			console.log(rl,"parts",parts);
-			
-			//	TODO pass value and unit to function that converts to pixels for comparison
-			var pixels = +parts.value;
-			
-			var mediaRule = {
-				value: +parts.value,
-				unit: parts.unit,
-				width: width,
-				pixels: pixels,
-				rules: [rule],
-				minmax: parts.minMax
-			};
-		
-			if (acc[key]) {
-				acc[key].rules = acc[key].rules.concat([rule]);
-			} else {
-				acc[key] = mediaRule;
-			}
-		});
-	
-		return acc;
-	},{});
-	
-	return breakpoints;
+
+	return pairMinMax(widths);
 };

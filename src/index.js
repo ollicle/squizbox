@@ -3,8 +3,6 @@ import Squizbox from './squizbox';
 
 import stylesheets from './collectStylesheets';
 import breakpoints from './collectBreakpoints';
-import pairMinMax from './pairMinMax';
-import sortByWidth from './sortByWidth';
 
 const objectToArray = function (obj) {
 	return Object.getOwnPropertyNames(obj).map(function(point){
@@ -18,14 +16,10 @@ const removeFromDom = function (tag) {
 
 const sheets = stylesheets(document);
 const breaks = breakpoints(sheets);
-const points = objectToArray(breaks).sort(sortByWidth);
-const pairs = pairMinMax(points);
 
 //	Gather styles
 // console.log('sheets',sheets);
-// console.log('breakpoints',breaks);
-// console.log('points',points);
-console.log('pairs',pairs);
+console.log('breakpoints',breaks);
 
 //	Strip out stylesheet links
 removeFromDom('link');
@@ -45,7 +39,7 @@ const squiz = new Squizbox({
 	// `data` is optional. A component can also have
 	// default data – we'll learn about that later.
 	data: {
-		breakpoints: pairs,
+		breakpoints: breaks,
 		iframeWidth: '1024',
 		selected: null
 	}
