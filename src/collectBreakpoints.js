@@ -62,14 +62,13 @@ const makeViewObject = function (rule) {
 		pixels: +parts.value,
 		unit: parts.unit,
 		width: width,
-// 		rules: [rule],
 		minmax: parts.minMax
 	};
 };
 
 export default function (stylesheets) {
 
-	var rules = stylesheets
+	var media = stylesheets
 		.filter(isNotLocal)
 		.filter(isIterable)
 		.map(getRules)
@@ -77,16 +76,16 @@ export default function (stylesheets) {
 		.filter(isMediaRule)
 		.map(getMedia);
 
-	console.log('rules',rules);
+	console.log('media',media);
 
-	var widths = rules
+	var boundaries = media
 		.map(getWidthRules)
 		.reduce(flatten)
 		.filter(dedupe)
 		.map(makeViewObject)
 		.sort(sortByWidth);
 	
-	console.log('widths',widths);
+	console.log('boundaries',boundaries);
 
-	return pairMinMax(widths);
+	return pairMinMax(boundaries);
 };

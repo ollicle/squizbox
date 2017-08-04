@@ -7,12 +7,12 @@
 	body {margin: 0}
 	</style>
 
-	{{#each breakpoints as measure}}
+	{{#each breakpoints as boundary}}
 		<Breakpoint
-			isSelected="{{ measure===selected }}"
-			minWidth="{{measure.min && measure.min.width}}"
-			maxWidth="{{measure.max && measure.max.width}}"
-			on:select='selectBreakpoint( measure )'
+			isSelected="{{ boundary===selected }}"
+			minWidth="{{boundary.min && boundary.min.width}}"
+			maxWidth="{{boundary.max && boundary.max.width}}"
+			on:select='selectBreakpoint( boundary )'
 		/>
 	{{/each}}
 </div>
@@ -31,8 +31,8 @@
 	import Em from './Em.html';
 	import Breakpoint from './Breakpoint.html';
 
-	function maxOrMin (measure) {
-		return measure.min || measure.max;
+	function maxOrMin (boundary) {
+		return boundary.min || boundary.max;
 	}
 
 	function emToPx (pixelsPerEm, ems) {
@@ -59,14 +59,14 @@
 			maxOrMin
 		},
 		methods: {
-			selectBreakpoint: function (measure) {
-				console.log('measure',measure);
-				const value = (measure.min||measure.max).value;
-				const unit = (measure.min||measure.max).unit;
+			selectBreakpoint: function (boundary) {
+				console.log('boundary',boundary);
+				const value = (boundary.min||boundary.max).value;
+				const unit = (boundary.min||boundary.max).unit;
 
 				this.set({
 					iframeWidth: toPx(this.get('emsize'), value, unit),
-					selected: measure
+					selected: boundary
 				});
 				console.log('selectBreakpoint', value, unit, this.get('selected'));
 			}
