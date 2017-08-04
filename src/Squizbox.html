@@ -7,12 +7,12 @@
 	body {margin: 0}
 	</style>
 
-	{{#each breakpoints as pair}}
+	{{#each breakpoints as measure}}
 		<Breakpoint
-			isSelected="{{ pair===selected }}"
-			minWidth="{{pair.min && pair.min.width}}"
-			maxWidth="{{pair.max && pair.max.width}}"
-			on:select='selectBreakpoint( pair )'
+			isSelected="{{ measure===selected }}"
+			minWidth="{{measure.min && measure.min.width}}"
+			maxWidth="{{measure.max && measure.max.width}}"
+			on:select='selectBreakpoint( measure )'
 		/>
 	{{/each}}
 </div>
@@ -31,8 +31,8 @@
 	import Em from './Em.html';
 	import Breakpoint from './Breakpoint.html';
 
-	function maxOrMin (pair) {
-		return pair.min || pair.max;
+	function maxOrMin (measure) {
+		return measure.min || measure.max;
 	}
 
 	function emToPx (pixelsPerEm, ems) {
@@ -59,14 +59,14 @@
 			maxOrMin
 		},
 		methods: {
-			selectBreakpoint: function (pair) {
-				console.log('pair',pair);
-				const value = (pair.min||pair.max).value;
-				const unit = (pair.min||pair.max).unit;
+			selectBreakpoint: function (measure) {
+				console.log('measure',measure);
+				const value = (measure.min||measure.max).value;
+				const unit = (measure.min||measure.max).unit;
 
 				this.set({
 					iframeWidth: toPx(this.get('emsize'), value, unit),
-					selected: pair
+					selected: measure
 				});
 				console.log('selectBreakpoint', value, unit, this.get('selected'));
 			}
