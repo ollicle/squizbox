@@ -12,9 +12,7 @@
 			isSelected="{{ pair===selected }}"
 			minWidth="{{pair.min && pair.min.width}}"
 			maxWidth="{{pair.max && pair.max.width}}"
-			value="{{ (pair.min||pair.max).value }}"
-			unit="{{ (pair.min||pair.max).unit }}"
-			on:select='selectBreakpoint( event.value, event.unit, pair )'
+			on:select='selectBreakpoint( pair )'
 		/>
 	{{/each}}
 </div>
@@ -61,8 +59,10 @@
 			maxOrMin
 		},
 		methods: {
-			selectBreakpoint: function (value, unit, pair) {
+			selectBreakpoint: function (pair) {
 				console.log('pair',pair);
+				const value = (pair.min||pair.max).value;
+				const unit = (pair.min||pair.max).unit;
 
 				this.set({
 					iframeWidth: toPx(this.get('emsize'), value, unit),
