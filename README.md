@@ -38,16 +38,26 @@ In a third console
 
 	npm run test -- "http://www.example.com"
 
-Click the exit button
+## todo
 
-## Next
+- breakpoint selection and edit
+
+	When both iframes ready
+
+	for each in array of media rules
+
+	build array of matching rules in each of the iframes
+
+	associate these by reference accessible to boundary object
+
+	write an edit function that is passed references to these rules via the selected boundary
+
+	bind selected width to edit media rules
+
+- cross convert breakpoints in em/rem with pixels
 
 - create committed dist directory and make bookmarklet accessible online somehow
 
-## todo
-
-- cross convert breakpoints in em/rem with pixels
-- breakpoint selection and edit
 - easy access to edited values (before and after perhaps)
 
 ## wishes
