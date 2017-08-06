@@ -51,6 +51,21 @@
 	}
 
 	export default {
+		oncreate () {
+			const upperIframe = this.refs.upperIframe;
+			const lowerIframe = this.refs.lowerIframe;
+			const loadingIframes = [
+				new Promise(function (resolve, reject) {
+					upperIframe.addEventListener("load", resolve.bind(null, upperIframe), false);
+				}),
+				new Promise(function (resolve, reject) {
+					lowerIframe.addEventListener("load", resolve.bind(null, lowerIframe), false);
+				})
+			];
+
+			Promise.all(loadingIframes).then(this.loaded);
+
+		},
 		components: {
 			Em,
 			Breakpoint
@@ -59,6 +74,9 @@
 			maxOrMin
 		},
 		methods: {
+			loaded: function (iframes) {
+				console.log('iframes loaded', iframes);
+			},
 			selectBreakpoint: function (boundary) {
 				console.log('boundary',boundary);
 				const value = (boundary.min||boundary.max).value;
