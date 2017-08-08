@@ -40,6 +40,10 @@ In a third console
 
 ## todo
 
+- shift the breakpoint extraction to a reduce over the stylesheets of both iframes
+
+- preserving references to the media rules for editing
+
 - breakpoint selection and edit
 
 	When both iframes ready

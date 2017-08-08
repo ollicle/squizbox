@@ -63,7 +63,7 @@
 				})
 			];
 
-			Promise.all(loadingIframes).then(this.loaded);
+			Promise.all(loadingIframes).then(this.loaded.bind(this));
 
 		},
 		components: {
@@ -76,6 +76,9 @@
 		methods: {
 			loaded: function (iframes) {
 				console.log('iframes loaded', iframes);
+				this.set({
+					breakpoints: this.get('breakpointsTemp')
+				});
 			},
 			selectBreakpoint: function (boundary) {
 				console.log('boundary',boundary);

@@ -39,7 +39,8 @@ const squiz = new Squizbox({
 	// `data` is optional. A component can also have
 	// default data – we'll learn about that later.
 	data: {
-		breakpoints: breaks,
+		breakpointsTemp: breaks,
+		breakpoints: [],
 		iframeWidth: '1024',
 		selected: null
 	}
