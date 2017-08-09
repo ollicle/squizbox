@@ -1,3 +1,3 @@
-export default function (document) {
-	return [].slice.call(document.styleSheets);
+export default function (iframe) {
+	return [].slice.call(iframe.contentDocument.styleSheets);
 };

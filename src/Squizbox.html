@@ -28,6 +28,9 @@
 </div>
 
 <script>
+	import stylesheets from './collectStylesheets';
+	import breakpoints from './collectBreakpoints';
+
 	import Em from './Em.html';
 	import Breakpoint from './Breakpoint.html';
 
@@ -50,6 +53,10 @@
 		return emToPx(pixelsPerEm, value);
 	}
 
+	const flatten = function(a, b) {
+		return a.concat(b);
+	};
+
 	export default {
 		oncreate () {
 			const upperIframe = this.refs.upperIframe;
@@ -62,9 +69,7 @@
 					lowerIframe.addEventListener("load", resolve.bind(null, lowerIframe), false);
 				})
 			];
-
 			Promise.all(loadingIframes).then(this.loaded.bind(this));
-
 		},
 		components: {
 			Em,
@@ -75,9 +80,9 @@
 		},
 		methods: {
 			loaded: function (iframes) {
-				console.log('iframes loaded', iframes);
+				const sheets = iframes.map(stylesheets).reduce(flatten);
 				this.set({
-					breakpoints: this.get('breakpointsTemp')
+					breakpoints: breakpoints(sheets)
 				});
 			},
 			selectBreakpoint: function (boundary) {

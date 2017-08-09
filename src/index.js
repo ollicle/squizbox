@@ -1,25 +1,9 @@
 // import 'babel-polyfill';
 import Squizbox from './squizbox';
 
-import stylesheets from './collectStylesheets';
-import breakpoints from './collectBreakpoints';
-
-const objectToArray = function (obj) {
-	return Object.getOwnPropertyNames(obj).map(function(point){
-		return obj[point];
-	});
-};
-
 const removeFromDom = function (tag) {
 	[].slice.call(document.getElementsByTagName(tag)).forEach((x)=> {x.remove()});
 };
-
-const sheets = stylesheets(document);
-const breaks = breakpoints(sheets);
-
-//	Gather styles
-// console.log('sheets',sheets);
-console.log('breakpoints',breaks);
 
 //	Strip out stylesheet links
 removeFromDom('link');
@@ -39,7 +23,6 @@ const squiz = new Squizbox({
 	// `data` is optional. A component can also have
 	// default data – we'll learn about that later.
 	data: {
-		breakpointsTemp: breaks,
 		breakpoints: [],
 		iframeWidth: '1024',
 		selected: null
