@@ -10,8 +10,8 @@
 	{{#each breakpoints as boundary}}
 		<Breakpoint
 			isSelected="{{ boundary===selected }}"
-			minWidth="{{boundary.min && boundary.min.width}}"
-			maxWidth="{{boundary.max && boundary.max.width}}"
+			minWidth="{{boundary.min && boundary.min.value + boundary.min.unit}}"
+			maxWidth="{{boundary.max && boundary.max.value + boundary.max.unit}}"
 			on:select='selectBreakpoint( boundary )'
 		/>
 	{{/each}}
@@ -53,6 +53,14 @@
 		return emToPx(pixelsPerEm, value);
 	}
 
+	function pxConverter (pixelsPerEm, fn) {
+		console.log('pixelsPerEm, fn', pixelsPerEm, fn);
+
+		return function (value, unit) {
+			return fn(pixelsPerEm, value, unit);
+		};
+	}
+
 	const flatten = function(a, b) {
 		return a.concat(b);
 	};
@@ -82,7 +90,7 @@
 			loaded: function (iframes) {
 				const sheets = iframes.map(stylesheets).reduce(flatten);
 				this.set({
-					breakpoints: breakpoints(sheets)
+					breakpoints: breakpoints(sheets, pxConverter(this.get('emsize'), toPx))
 				});
 			},
 			selectBreakpoint: function (boundary) {
@@ -91,6 +99,7 @@
 				const unit = (boundary.min||boundary.max).unit;
 
 				this.set({
+					//	todo: use already determined pixels value
 					iframeWidth: toPx(this.get('emsize'), value, unit),
 					selected: boundary
 				});

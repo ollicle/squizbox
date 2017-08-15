@@ -39,53 +39,66 @@ const flatten = function(a, b) {
 	return a.concat(b);
 };
 
-const dedupe = function (item, index, array) {
-	return array.indexOf(item) === index;
+const getMedia = function (CSSMediaRule) {
+	return CSSMediaRule.media;
 };
 
-const getMedia = function (ruleList) {
-	return ruleList.media;
+const objectToArray = function (obj) {
+	return Object.getOwnPropertyNames(obj).map(function(point){
+		return obj[point];
+	});
 };
 
-const getWidthRules = function (rule) {
-	return rule.mediaText.match(extractWidth);
-};
+export default function (stylesheets, toPx) {
 
-const makeViewObject = function (rule) {
-	const parts = deconstructDeclaration(rule);
-	const width = parts.value + parts.unit;
-	const key = parts.minMax + width;
-	
-	// TODO	Determine minimal object required for view
-	return {
-		value: +parts.value,
-		pixels: +parts.value,
-		unit: parts.unit,
-		width: width,
-		minmax: parts.minMax
-	};
-};
-
-export default function (stylesheets) {
-
-	var media = stylesheets
+	var MediaLists = stylesheets
 		.filter(isNotLocal)
 		.filter(isIterable)
 		.map(getRules)
 		.reduce(flatten)
 		.filter(isMediaRule)
 		.map(getMedia);
-
-	console.log('media',media);
-
-	var boundaries = media
-		.map(getWidthRules)
-		.reduce(flatten)
-		.filter(dedupe)
-		.map(makeViewObject)
-		.sort(sortByWidth);
 	
-	console.log('boundaries',boundaries);
+	console.log('MediaLists',MediaLists);
 
-	return pairMinMax(boundaries);
+	var boundaryObjs = MediaLists
+		.map(function(MediaList){
+			return {
+				MediaLists: [MediaList],
+				widthRules: MediaList.mediaText.match(extractWidth)
+			};
+		})
+		//	expand actually
+		.reduce(function(accumulated, item) {
+			return accumulated.concat(item.widthRules.map(function(widthRule){
+				return Object.assign(deconstructDeclaration(widthRule), {
+					widthRule: widthRule,
+					MediaLists: item.MediaLists
+				});
+			}));
+		}, [])
+		//	add converted pixels
+		.map(function(item){
+			return Object.assign({
+				pixels: toPx(item.value, item.unit)
+			}, item);
+		})
+		//	collate common rule MediaLists
+		.reduce(function(acc, item){
+			
+			//	build object using width as key
+			if (acc[item.widthRule]) {
+				acc[item.widthRule].MediaLists = acc[item.widthRule].MediaLists.concat(item.MediaLists);
+			} else {
+				return Object.assign(acc, {[item.widthRule]: item });
+			}
+			return acc;
+			
+		}, {});
+		
+	//	convert back to array
+	return objectToArray(boundaryObjs)
+		.sort(sortByWidth)
+		.reduce(pairMinMax, []);
+// 		.map(console.log);
 };
