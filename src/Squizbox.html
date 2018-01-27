@@ -12,7 +12,6 @@
 			index="{{index}}"
 			boundary="{{boundary}}"
 			isSelected="{{ boundary===selected }}"
-			isSelectedIndex="{{ index===selectedIndex}}"
 			on:select="selectBreakpoint( boundary, event )"
 			on:edit="editIframwWidth(event.pixelWidth)"
 			vpWidth="{{viewportWidth}}"
@@ -113,11 +112,8 @@
 				this.set({
 					//	todo: use already determined pixels value
 					iframeWidth: toPx(this.get('emsize'), value, unit),
-					selectedIndex: event.index,
 					selected: boundary
 				});
-
-				console.log('selectBreakpoint', this.get('selected'));
 			},
 			editIframwWidth: function (pixelWidth) {
 				console.log('pixelWidth', pixelWidth);

@@ -1,15 +1,15 @@
 <div class="breakpoint">
 	{{#if minWidth}}
-		<div class="breakpoint-min {{isSelectedIndex ? 'is-selected' : ''}}" style="background-size:{{minWidth}} 100%"></div>
+		<div class="breakpoint-min {{isSelected ? 'is-selected' : ''}}" style="background-size:{{minWidth}} 100%"></div>
 	{{/if}}
 	{{#if maxWidth}}
-		<div class="breakpoint-max {{isSelectedIndex ? 'is-selected' : ''}}" style="background-size:{{maxWidth}} 100%"></div>
+		<div class="breakpoint-max {{isSelected ? 'is-selected' : ''}}" style="background-size:{{maxWidth}} 100%"></div>
 	{{/if}}
 	<button class="select-button" type="button" on:click='fire( "select", { bmin, bmax, boundary, index } )'>
 		{{#if minWidth}}min: {{minWidth}} {{/if}}
 		{{#if maxWidth}}max: {{maxWidth}} {{/if}}
 	</button>
-	{{#if isSelectedIndex}}
+	{{#if isSelected}}
 		<label for="resizer{{index}}">width</label> <input type="number" bind:value="bmin.value" />
 		<input id="resizer{{index}}" class="resizer" type="range" min="0" max="{{vpWidth}}" step="1" bind:value="bmin.value" />
 	{{/if}}
