@@ -11,7 +11,7 @@
 	</button>
 	{{#if isSelected}}
 		<label for="resizer{{index}}">width</label> <input type="number" bind:value="bmin.value" />
-		<input id="resizer{{index}}" class="resizer" type="range" min="0" max="{{vpWidth}}" step="1" bind:value="bmin.value" />
+		<input id="resizer{{index}}" class="resizer" type="range" min="0" max="{{viewportWidth}}" step="1" bind:value="bmin.value" />
 	{{/if}}
 </div>
 
