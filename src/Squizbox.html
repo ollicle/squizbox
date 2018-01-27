@@ -7,12 +7,15 @@
 	body {margin: 0}
 	</style>
 
-	{{#each breakpoints as boundary}}
+	{{#each breakpoints as boundary, index}}
 		<Breakpoint
+			index="{{index}}"
+			boundary="{{boundary}}"
 			isSelected="{{ boundary===selected }}"
-			minWidth="{{boundary.min && boundary.min.value + boundary.min.unit}}"
-			maxWidth="{{boundary.max && boundary.max.value + boundary.max.unit}}"
-			on:select='selectBreakpoint( boundary )'
+			isSelectedIndex="{{ index===selectedIndex}}"
+			on:select="selectBreakpoint( boundary, event )"
+			on:edit="editIframwWidth(event.pixelWidth)"
+			vpWidth="{{viewportWidth}}"
 		/>
 	{{/each}}
 </div>
@@ -89,21 +92,38 @@
 		methods: {
 			loaded: function (iframes) {
 				const sheets = iframes.map(stylesheets).reduce(flatten);
+
+				//	TODO
+				//	Exit/display notice if no editable stylesheets found
+				//	Same domain, external files
+				// console.log(iframes.map(stylesheets));
+
 				this.set({
 					breakpoints: breakpoints(sheets, pxConverter(this.get('emsize'), toPx))
 				});
 			},
-			selectBreakpoint: function (boundary) {
-				console.log('boundary',boundary);
-				const value = (boundary.min||boundary.max).value;
-				const unit = (boundary.min||boundary.max).unit;
+			selectBreakpoint: function (boundary, event) {
+				console.log('boundary', boundary);
+				console.log('event.boundary', event.boundary);
+				console.log('bmin', event.bmin);
+
+				const value = (event.bmin||event.bmax).value;
+				const unit = (event.bmin||event.bmax).unit;
 
 				this.set({
 					//	todo: use already determined pixels value
 					iframeWidth: toPx(this.get('emsize'), value, unit),
+					selectedIndex: event.index,
 					selected: boundary
 				});
-				console.log('selectBreakpoint', value, unit, this.get('selected'));
+
+				console.log('selectBreakpoint', this.get('selected'));
+			},
+			editIframwWidth: function (pixelWidth) {
+				console.log('pixelWidth', pixelWidth);
+				this.set({
+					iframeWidth: pixelWidth
+				})
 			}
 		}
 	};

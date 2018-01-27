@@ -25,7 +25,8 @@ const squiz = new Squizbox({
 	data: {
 		breakpoints: [],
 		iframeWidth: '1024',
-		selected: null
+		selected: null,
+		selectedIndex: null
 	}
 });
 

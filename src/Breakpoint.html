@@ -1,21 +1,73 @@
 <div class="breakpoint">
 	{{#if minWidth}}
-	<div class="breakpoint-min {{isSelected ? 'is-selected' : ''}}" style="background-size:{{minWidth}} 100%"></div>
+		<div class="breakpoint-min {{isSelectedIndex ? 'is-selected' : ''}}" style="background-size:{{minWidth}} 100%"></div>
 	{{/if}}
 	{{#if maxWidth}}
-	<div class="breakpoint-max {{isSelected ? 'is-selected' : ''}}" style="background-size:{{maxWidth}} 100%"></div>
+		<div class="breakpoint-max {{isSelectedIndex ? 'is-selected' : ''}}" style="background-size:{{maxWidth}} 100%"></div>
 	{{/if}}
-	<button class="select-button" type="button" on:click='fire( "select" )'>
+	<button class="select-button" type="button" on:click='fire( "select", { bmin, bmax, boundary, index } )'>
 		{{#if minWidth}}min: {{minWidth}} {{/if}}
 		{{#if maxWidth}}max: {{maxWidth}} {{/if}}
 	</button>
+	{{#if isSelectedIndex}}
+		<label for="resizer{{index}}">width</label> <input type="number" bind:value="bmin.value" />
+		<input id="resizer{{index}}" class="resizer" type="range" min="0" max="{{vpWidth}}" step="1" bind:value="bmin.value" />
+	{{/if}}
 </div>
 
 <script>
+	import deconstructDeclaration from './deconstructDeclaration';
+
+
+	//	-/+ maintain recorded diff between min/max
+	//	todo edit both min and max!
+	//	min *and* max - todo make into handy array with both somewhere upstream
+	function editBreakpoint(newMeasure) {
+		console.log('editBreakpoint MediaLists', this._state.boundary.min.MediaLists);
+		console.log('editBreakpoint arguments', arguments);
+		console.log('editBreakpoint this', this);
+
+		this._state.boundary.min.MediaLists.forEach((MediaList) => {
+
+			var newMediaText = `(${newMeasure.minMax}-width: ${newMeasure.value}${newMeasure.unit})`;
+			console.log('newMediaText', newMediaText);
+
+			MediaList.mediaText = newMediaText;
+
+			console.log('MediaList', MediaList);
+		});
+
+		this.fire('edit', { pixelWidth: this.get('bmin').value });
+	}
+
 	export default {
+		oncreate () {
+			console.log('breakpoint boundary', this.get('boundary') );
+
+			const observeResize = this.observe('bmin', editBreakpoint.bind(this), { init: false });
+		},
+
 		helpers: {
 		},
 		methods: {
+		},
+		computed : {
+
+			//	boundary rules
+			minRule: boundary => boundary.min && boundary.min.widthRule,
+// 			maxRule: boundary => boundary.max && boundary.max.widthRuleEdit || boundary.max.widthRule,
+
+			//	values based on boundary min and max
+			bmin: minRule => minRule && deconstructDeclaration(minRule),
+// 			bmax: maxRule => maxRule && deconstructDeclaration(maxRule),
+
+			//	widths based on boundary min and max
+			minWidth: bmin => bmin && bmin.value + bmin.unit,
+// 			maxWidth: bmax => bmax && bmax.value + bmax.unit,
+
+			//	min and max built from merge - still boundary!
+// 			min: (boundary, bmin) => boundary.min && Object.assign({}, boundary.min, bmin),
+// 			max: (boundary, bmax) => boundary.max && Object.assign({}, boundary.max, bmax)
 		}
 	};
 </script>

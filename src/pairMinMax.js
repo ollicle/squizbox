@@ -8,15 +8,12 @@ export default function (acc, point) {
 			pixels: point.pixels
 		});
 	}
-// 	console.log('point.pixels',point.pixels);
 	
 	//	is min check for existing max to pair with
 	var partner = acc.filter(function (item) {
-// 		console.log('item.pixels',item.pixels);
 		return isWithinOne(item.pixels, point.pixels);
 	});
 	
-// 	console.log('partner',partner);
 	if (partner.length) {
 		return acc.map(function (item) {
 			if (isWithinOne(item.pixels, point.pixels)) {

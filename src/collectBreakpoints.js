@@ -77,7 +77,7 @@ export default function (stylesheets, toPx) {
 				});
 			}));
 		}, [])
-		//	add converted pixels
+		//	add converted pixels (for pairing min & max)
 		.map(function(item){
 			return Object.assign({
 				pixels: toPx(item.value, item.unit)

@@ -23,20 +23,32 @@ Note: when updating selenium drivers update the browsers alongside them
 
 4. Start webserver
 
+	In a new console
+
 		npm run serve
 
 5. Start selenium server
 
-	In a new console
+	In another new console
 
 		npm run selenium-start
 
+6. Serve test page
+
+	In another new console
+
+		npm run serve-test
 
 ## Test run script
 
-In a third console
+In a fourth console
 
-	npm run test -- "http://www.example.com"
+	npm run test -- "http://localhost:5555/"
+
+- Firefox browser window should open,
+- loading the test page,
+- before injecting and executing the bookmarklet code
+
 
 ## todo
 

@@ -10,6 +10,7 @@
     "build:dist": "webpack --env=prod",
     "postbuild:dist": "npm run html",
     "serve": "serve -p 3333 ./",
+    "serve-test": "serve -p 5555 ./test/",
     "selenium-start": "selenium-standalone start",
     "test": "npm run selenium-run",
     "selenium-install": "selenium-standalone install",
