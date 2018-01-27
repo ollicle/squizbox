@@ -5,7 +5,7 @@
 	{{#if maxWidth}}
 		<div class="breakpoint-max {{isSelected ? 'is-selected' : ''}}" style="background-size:{{maxWidth}} 100%"></div>
 	{{/if}}
-	<button class="select-button" type="button" on:click='fire( "select", { bmin, bmax, boundary, index } )'>
+	<button class="select-button" type="button" on:click='fire( "select", { bmin, bmax, boundary } )'>
 		{{#if minWidth}}min: {{minWidth}} {{/if}}
 		{{#if maxWidth}}max: {{maxWidth}} {{/if}}
 	</button>
