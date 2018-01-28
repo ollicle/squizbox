@@ -10,26 +10,36 @@
 		{{#if maxWidth}}max: {{maxWidth}} {{/if}}
 	</button>
 	{{#if isSelected}}
-		<label for="resizer{{index}}">width</label> <input type="number" bind:value="bmin.value" />
-		<input id="resizer{{index}}" class="resizer" type="range" min="0" max="{{viewportWidth}}" step="1" bind:value="bmin.value" />
+		<label for="resizer{{index}}">width</label> <input type="number" bind:value="px" />
+		<input id="resizer{{index}}" class="resizer" type="range" min="0" max="{{viewportWidth}}" step="1" bind:value="px" />
 	{{/if}}
 </div>
 
 <script>
 	import deconstructDeclaration from './deconstructDeclaration';
 
+	function pxToEm (pixelsPerEm, px) {
+		return px / pixelsPerEm;
+	}
 
-	//	-/+ maintain recorded diff between min/max
+	//	todo set mediaText using original unit
 	//	todo edit both min and max!
 	//	min *and* max - todo make into handy array with both somewhere upstream
-	function editBreakpoint(newMeasure) {
+	function editBreakpoint(newPx) {
 		console.log('editBreakpoint MediaLists', this._state.boundary.min.MediaLists);
 		console.log('editBreakpoint arguments', arguments);
 		console.log('editBreakpoint this', this);
 
+		// if unit is em - convert
+		const pixelsPerEm = this._root.get('emsize');
+		const newValue = this._state.boundary.min.unit === 'em' ? pxToEm(pixelsPerEm, newPx) : newPx;
+
+		console.log('pixelsPerEm',pixelsPerEm);
+
 		this._state.boundary.min.MediaLists.forEach((MediaList) => {
 
-			var newMediaText = `(${newMeasure.minMax}-width: ${newMeasure.value}${newMeasure.unit})`;
+			//	todo respect existing content of mediaText - replace value only - preserve minmax and unit
+			var newMediaText = `(${this._state.boundary.min.minMax}-width: ${newValue}${this._state.boundary.min.unit})`;
 			console.log('newMediaText', newMediaText);
 
 			MediaList.mediaText = newMediaText;
@@ -37,14 +47,17 @@
 			console.log('MediaList', MediaList);
 		});
 
-		this.fire('edit', { pixelWidth: this.get('bmin').value });
+		this.fire('edit', { pixelWidth: this.get('px') });
 	}
 
 	export default {
 		oncreate () {
 			console.log('breakpoint boundary', this.get('boundary') );
 
-			const observeResize = this.observe('bmin', editBreakpoint.bind(this), { init: false });
+			this.set({ px: this.get('boundary').pixels });
+
+			//	TODO Change this to observe px instead of bin
+			const observeResize = this.observe('px', editBreakpoint.bind(this), { init: false });
 		},
 
 		helpers: {
@@ -53,21 +66,30 @@
 		},
 		computed : {
 
+
+
+
+			//	MediaLists to edit (min and max?)
+
 			//	boundary rules
+			//	'min-width: 36em'
 			minRule: boundary => boundary.min && boundary.min.widthRule,
-// 			maxRule: boundary => boundary.max && boundary.max.widthRuleEdit || boundary.max.widthRule,
+// 			maxRule: boundary => boundary.max && boundary.max.widthRule,
 
 			//	values based on boundary min and max
+			//	{value:36, unit:'em', minmax:'min'}
 			bmin: minRule => minRule && deconstructDeclaration(minRule),
 // 			bmax: maxRule => maxRule && deconstructDeclaration(maxRule),
 
 			//	widths based on boundary min and max
+			// '36em'
 			minWidth: bmin => bmin && bmin.value + bmin.unit,
 // 			maxWidth: bmax => bmax && bmax.value + bmax.unit,
 
-			//	min and max built from merge - still boundary!
-// 			min: (boundary, bmin) => boundary.min && Object.assign({}, boundary.min, bmin),
-// 			max: (boundary, bmax) => boundary.max && Object.assign({}, boundary.max, bmax)
+			//	min width in pixels - for setting value of range input and iframeWidth in root Squizbox
+				//	or perhaps range input should be in same unit as breakpoint i.e. convert viewportWidth to ems as needed?
+				//	maybe pass object back to Squizbox and convert as necessary there
+			//	max width in pixels
 		}
 	};
 </script>
