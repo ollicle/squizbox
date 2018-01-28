@@ -3,6 +3,7 @@ body {
 }
 div {
 	border: solid 2px black;
+	padding: 5px;
 }
 
 .outer {
@@ -17,7 +18,7 @@ h1 {
 
 }
 
-@media (min-width: 400px) {
+@media (min-width: 24em) {
 
 	h1 {
 		font-size: 400%;
@@ -27,7 +28,7 @@ h1 {
 	}
 }
 
-@media (min-width: 600px) {
+@media (min-width: 36em) {
 	.outer {
 		display: flex;
 		background-color: red;
