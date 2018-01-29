@@ -105,12 +105,11 @@
 				console.log('selectBreakpoint boundary', boundary);
 				console.log('selectBreakpoint event', event);
 
-				const value = (event.bmin||event.bmax).value;
-				const unit = (event.bmin||event.bmax).unit;
+				const value = event.px;
+				const unit = (boundary.min||boundary.max).unit;
 
 				this.set({
-					//	todo: use already determined pixels value
-					iframeWidth: toPx(this.get('emsize'), value, unit),
+					iframeWidth: value,
 					selected: boundary
 				});
 			},
