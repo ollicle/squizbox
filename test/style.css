@@ -20,11 +20,29 @@ h1 {
 
 @media (min-width: 24em) {
 
+	.outer {
+		background-color: yellow;
+	}
+}
+
+@media (max-width: 31.9375em) {
+
+	.outer {
+		color: blue;
+	}
+}
+
+@media (min-width: 24em) and (max-width: 35.9375em) {
+
 	h1 {
 		font-size: 400%;
 	}
-	.outer {
-		background-color: yellow;
+}
+
+@media (min-width: 32em) and (max-width: 47.9375em) {
+
+	.intro {
+		font-size: 200%;
 	}
 }
 
