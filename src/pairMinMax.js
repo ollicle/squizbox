@@ -2,7 +2,7 @@ import isWithinOne from './isWithinOne';
 
 export default function (acc, point) {
 	
-	if (point.minmax === 'max') {
+	if (point.minMax === 'max') {
 		return acc.concat({
 			max: point,
 			pixels: point.pixels

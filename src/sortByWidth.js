@@ -10,10 +10,10 @@ export default function (a,b) {
 	}
 	
 	if (a.pixels === b.pixels) {
-		if (a.minmax === 'max' && b.minmax === 'min') {
+		if (a.minMax === 'max' && b.minMax === 'min') {
 			return -1;
 		}
-		if (a.minmax === 'min' && b.minmax === 'max') {
+		if (a.minMax === 'min' && b.minMax === 'max') {
 			return 1;
 		}
 	}
