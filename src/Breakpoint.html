@@ -75,6 +75,9 @@
 			//	widths based on boundary min and max
 			// '36em'
 			minWidth: (px, boundary, pixelsPerEm) => {
+				if (!boundary.min) {
+					return false;
+				}
 				const value = boundary.min.unit === 'em' ? pxToEm(pixelsPerEm, px) : px;
 				return `${value}${boundary.min.unit}`;
 			},
