@@ -17,6 +17,7 @@
 </div>
 
 <script>
+
 	import deconstructDeclaration from './deconstructDeclaration';
 
 	function pxToEm (pixelsPerEm, px) {
@@ -26,25 +27,37 @@
 	//	todo set mediaText using original unit
 	//	todo edit both min and max!
 	//	min *and* max - todo make into handy array with both somewhere upstream
-	function editBreakpoint(newPx) {
-		console.log('editBreakpoint MediaLists', this._state.boundary.min.MediaLists);
+	function editBreakpoint(newPx, prevPx) {
+
 		console.log('editBreakpoint arguments', arguments);
+		console.log('editBreakpoint MediaLists', this._state.boundary.min && this._state.boundary.min.MediaLists);
 		console.log('editBreakpoint this', this);
 
-		// if unit is em - convert
 		const pixelsPerEm = this._root.get('emsize');
-		const newValue = this._state.boundary.min.unit === 'em' ? pxToEm(pixelsPerEm, newPx) : newPx;
+// 		const maxPx = this.hasMin && this.hasMax ? newPx - 1 : newPx;
 
-		console.log('pixelsPerEm',pixelsPerEm);
+		this._state.boundary.min && this._state.boundary.min.MediaLists.forEach((MediaList) => {
+			const newValue = this._state.boundary.min.unit === 'em' ? pxToEm(pixelsPerEm, newPx) : newPx;
+			const existingMediaText = "" + MediaList.mediaText;
+			const newMediaText = existingMediaText.replace(/(min-width:\s)([\d.]+)(em|px)/, (match, prop, value, unit) => {
+				return `${prop}${newValue}${unit}`;
+			});
 
-		this._state.boundary.min.MediaLists.forEach((MediaList) => {
-
-			//	todo respect existing content of mediaText - replace value only - preserve minmax and unit
-			var newMediaText = `(${this._state.boundary.min.minMax}-width: ${newValue}${this._state.boundary.min.unit})`;
 			console.log('newMediaText', newMediaText);
-
 			MediaList.mediaText = newMediaText;
+			console.log('MediaList', MediaList);
+		});
 
+		this._state.boundary.max && this._state.boundary.max.MediaLists.forEach((MediaList) => {
+
+			const newValue = this._state.boundary.max.unit === 'em' ? pxToEm(pixelsPerEm, this._state.maxPx) : this._state.maxPx;
+			const existingMediaText = "" + MediaList.mediaText;
+			const newMediaText = existingMediaText.replace(/(max-width:\s)([\d.]+)(em|px)/, (match, prop, value, unit) => {
+				return `${prop}${newValue}${unit}`;
+			});
+
+			console.log('newMediaText', newMediaText);
+			MediaList.mediaText = newMediaText;
 			console.log('MediaList', MediaList);
 		});
 
@@ -69,6 +82,9 @@
 		computed : {
 			hasMin: boundary => !!boundary.min,
 			hasMax: boundary => !!boundary.max,
+			maxPx: (hasMin, hasMax, px) => {
+				return hasMin && hasMax ? px - 1 : px;
+			},
 
 			//	MediaLists to edit (min and max?)
 
@@ -82,7 +98,18 @@
 				return `${value}${boundary.min.unit}`;
 			},
 
-// 			maxWidth: …,
+ 			maxWidth: (maxPx, boundary, pixelsPerEm) => {
+				if (!boundary.max) {
+					return false;
+				}
+
+				//	if boundary.min && boundary.max
+				//	max may differ from min
+				//	determine difference (e.g. -0.5px or -1px)
+
+				const value = boundary.max.unit === 'em' ? pxToEm(pixelsPerEm, maxPx) : maxPx;
+				return `${value}${boundary.max.unit}`;
+ 			}
 
 		}
 	};

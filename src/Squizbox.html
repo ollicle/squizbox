@@ -29,6 +29,15 @@
 </div>
 
 <script>
+
+	//	Refactor/Redesign idea
+	//	display unique min and max media queries separately
+	//	Isolate those which use unique combinations of both a min and max measure
+	//	Fold together those which share the same query as media query groups
+	//	Provide handles to select a *measure*
+	//	Selecting a measure highlights all media query groups with instances of this measure (within tolerance)
+	//	Editing a measure edits all media queries which share this measure
+
 	import stylesheets from './collectStylesheets';
 	import breakpoints from './collectBreakpoints';
 
