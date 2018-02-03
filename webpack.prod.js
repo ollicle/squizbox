@@ -33,10 +33,6 @@ module.exports = {
   },
 	
   plugins: [
-//     new webpack.LoaderOptionsPlugin({
-//       minimize: true,
-//       debug: false
-//     }),
     new UglifyJsPlugin(
 		{
 		  mangle: {
