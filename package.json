@@ -8,16 +8,19 @@
     "dist": "npm run build:dist",
     "build:dev": "webpack --env=dev --display-error-details --progress --profile --colors",
     "build:dist": "webpack --env=prod",
-    "postbuild:dist": "npm run html",
+    "postbuild:dist": "npm run bookmark",
+    "bookmark": "bookmark -M -f ./build/index.js > ./build/bookmark.js",
+    "postbookmark": "npm run readme",
+    "prereadme": "cp ./src/template.md ./build/README.md",
+    "readme": "cd ./build/ && perl -pe 's/INCLUDEJS/`cat bookmark.js`/ge' -i README.md",
+    "postreadme": "cp ./build/README.md ./README.md",
     "serve": "serve -p 3333 ./",
     "serve-test": "serve -p 5555 ./test/",
     "selenium-start": "selenium-standalone start",
     "test": "npm run selenium-run",
     "selenium-install": "selenium-standalone install",
     "selenium-run": "node ./test/index.js",
-    "webpack-serve": "webpack-dev-server",
-    "prehtml": "cp ./src/template.html ./build/index.html",
-    "html": "cd ./build/ && perl -pe 's/INCLUDEJS/`cat index.js`/ge' -i index.html"
+    "webpack-serve": "webpack-dev-server"
   },
   "author": "Oliver Boermans <ollie@ollicle.com>",
   "license": "ISC",
@@ -35,5 +38,6 @@
     "webdriverio": "^4.8.0",
     "webpack": "^2.5.0",
     "webpack-dev-server": "^2.5.1"
-  }
+  },
+  "dependencies": {}
 }
