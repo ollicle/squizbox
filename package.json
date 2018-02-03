@@ -1,7 +1,7 @@
 {
   "name": "squizbox",
   "version": "1.0.0",
-  "description": "playing with svelte.technology",
+  "description": "CSS media breakpoint editor",
   "main": "index.js",
   "scripts": {
     "start": "npm run build:dev",
