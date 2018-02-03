@@ -1,14 +1,18 @@
 # Squizbox
 
-## Why?
+*Work in progress. Here be dragons!*
 
+## Preview and adjust CSS media width breakpoints
 
+This bookmarklet is an experiment to test the hypothesis that better tools can help answer the _design_ decision – *at what screen width should this change?*. Use it to visually preview either side of a breakpoint simultaneously. Media queries of the same measure are collated to edit them as one.
+
+No more designing around fixed, arbitrary, breakpoints.
 
 ## Usage
 
 ### Install bookmarklet
 
-Drag this link to your browser bookmark bar: <a href='javascript:(function(){ INCLUDEJS })();' >squizbox</a>
+Drag this link to your browser bookmark bar: [squizbox][code]
 
 Click the bookmarklet to inspect and edit @media min-width and max-width breakpoints used in the CSS of the current page.
 
@@ -79,9 +83,11 @@ Presuming dependencies are installed. The `dist` script builds and embeds the bo
 - window resizing in a mode that deselects selected breakpoints
 - easy access to edited values (before and after perhaps)
 - remove console logging from dist build somehow
+- add visible version
 - UI design
 
 ## Wishes
 
-- Remove hard coded local urls from scripts
 - reload re-generated build within initial selenium session
+
+[code]: javascript:(function(){ INCLUDEJS })();

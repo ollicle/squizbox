@@ -13,7 +13,7 @@
     "postbookmark": "npm run readme",
     "prereadme": "cp ./src/template.md ./build/README.md",
     "readme": "cd ./build/ && perl -pe 's/INCLUDEJS/`cat bookmark.js`/ge' -i README.md",
-    "postreadme": "cp ./build/README.md ./README.md",
+    "postreadme": "mv -f ./build/README.md ./README.md",
     "serve": "serve -p 3333 ./",
     "serve-test": "serve -p 5555 ./test/",
     "selenium-start": "selenium-standalone start",
