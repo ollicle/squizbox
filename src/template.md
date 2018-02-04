@@ -12,7 +12,7 @@ No more designing around fixed, arbitrary, breakpoints.
 
 ### Install bookmarklet
 
-Drag this link to your browser bookmark bar: [squizbox][javascript:(function(){ INCLUDEJS })();]
+Drag this link to your browser bookmark bar: <a href="javascript:(function(){ INCLUDEJS })()">squizbox</a>
 
 Click the bookmarklet to inspect and edit @media min-width and max-width breakpoints used in the CSS of the current page.
 
