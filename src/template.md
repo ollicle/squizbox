@@ -14,6 +14,8 @@ No more designing around fixed, arbitrary, breakpoints.
 
 Drag this link to your browser bookmark bar: <a href="javascript:(function(){ INCLUDEJS })()">squizbox</a>
 
+(If you don’t see a link above try visiting [the project site](https://ollicle.github.io/squizbox/))
+
 Click the bookmarklet to inspect and edit @media min-width and max-width breakpoints used in the CSS of the current page.
 
 ### Limitations
