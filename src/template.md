@@ -12,7 +12,7 @@ No more designing around fixed, arbitrary, breakpoints.
 
 ### Install bookmarklet
 
-Drag this link to your browser bookmark bar: [squizbox][code]
+Drag this link to your browser bookmark bar: [squizbox][javascript:(function(){ INCLUDEJS })();]
 
 Click the bookmarklet to inspect and edit @media min-width and max-width breakpoints used in the CSS of the current page.
 
@@ -90,4 +90,6 @@ Presuming dependencies are installed. The `dist` script builds and embeds the bo
 
 - reload re-generated build within initial selenium session
 
-[code]: javascript:(function(){ INCLUDEJS })();
+## Editing this document
+
+This README is generated from [template.md](src/template.md)
