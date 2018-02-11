@@ -59,3 +59,9 @@ h1 {
 		background-color: red;
 	}
 }
+
+@media print {
+	body {
+		font-size: 75%;
+	}
+}
