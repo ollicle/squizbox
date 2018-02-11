@@ -43,6 +43,14 @@ const getMedia = function (CSSMediaRule) {
 	return CSSMediaRule.media;
 };
 
+const isWidth = function (CSSMediaRule) {
+	return /(min|max)/.test(CSSMediaRule);
+};
+
+const hasWidthMedia = function (MediaList) {
+	return MediaList.some(isWidth);
+};
+
 const objectToArray = function (obj) {
 	return Object.getOwnPropertyNames(obj).map(function(point){
 		return obj[point];
@@ -57,7 +65,8 @@ export default function (stylesheets, toPx) {
 		.map(getRules)
 		.reduce(flatten)
 		.filter(isMediaRule)
-		.map(getMedia);
+		.map(getMedia)
+		.filter(hasWidthMedia);
 	
 	console.log('MediaLists',MediaLists);
 
