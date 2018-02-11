@@ -39,5 +39,7 @@
     "webpack": "^2.5.0",
     "webpack-dev-server": "^2.5.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "inline-bookmark": "^1.1.0"
+  }
 }
