@@ -29,7 +29,7 @@ Click the bookmarklet to inspect and edit @media min-width and max-width breakpo
 
 ## Development test set-up
 
-Beyond setting up the command line scripts as npm scripts, I’ve done very little to ensure the dev set-up runs anywhere but my Mac. Disclaimers aside, the mostly manual testing set-up uses Selenium to open a url in a Firefox window – saving several clicks by injecting the bookmarklet into the page automagically.
+Beyond setting up the command line scripts as npm scripts, I’ve done very little to ensure the dev set-up runs anywhere but my Mac.
 
 1. Install dependencies
 
@@ -37,45 +37,31 @@ Beyond setting up the command line scripts as npm scripts, I’ve done very litt
 
 		npm i
 
-2. Install selenium
-
-		npm run selenium-install
-
-3. Bundle script and start watcher
+2. Bundle script and start watcher
 
 		npm start
 
-4. Start webserver
+3. Start webserver
 
-	In a new console
+	Serves the test page `./test/index.html` on <http://localhost:3000> In a new console:
 
 		npm run serve
 
-5. Start selenium server
+4. Start browser-sync proxy server
 
-	In another new console
+	Loads test page with bookmarklet `./build/index.js` injected <http://localhost:3001>. In another new console:
 
-		npm run selenium-start
+		npm run proxy
 
-6. Serve test page
+5. Start Cypress test console
 
-	In another new console
+	In a third console:
 
-		npm run serve-test
-
-7. Run manual test script
-
-	In a fourth console
-
-		npm run test -- "http://localhost:5555/"
-
-	- Firefox browser window opens,
-	- loading the test page,
-	- bookmarklet code is injected and executed
+		npm run cypress:open
 
 ### Distribution build
 
-Presuming dependencies are installed. The `dist` script builds and embeds the bookmarklet code into this README
+Presuming dependencies are installed. The `dist` script builds and embeds the bookmarklet code `./build/bookmark.js` into this README
 
 	npm run dist
 
@@ -87,10 +73,6 @@ Presuming dependencies are installed. The `dist` script builds and embeds the bo
 - remove console logging from dist build somehow
 - add visible version
 - UI design
-
-## Wishes
-
-- reload re-generated build within initial selenium session
 
 ## Editing this document
 
