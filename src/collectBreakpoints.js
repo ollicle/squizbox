@@ -48,7 +48,7 @@ const isWidth = function (CSSMediaRule) {
 };
 
 const hasWidthMedia = function (MediaList) {
-	return MediaList.some(isWidth);
+	return [].some.call(MediaList,isWidth);
 };
 
 const objectToArray = function (obj) {
