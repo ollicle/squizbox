@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "browser-sync": "^2.23.6",
-    "cypress": "^2.0.1"
+    "cypress": "^2.0.1",
+    "inline-bookmark": "^1.1.0"
   }
 }
