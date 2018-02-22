@@ -44,7 +44,7 @@ const getMedia = function (CSSMediaRule) {
 };
 
 const isWidth = function (CSSMediaRule) {
-	return /(min|max)/.test(CSSMediaRule);
+	return /(min-width|max-width)/.test(CSSMediaRule);
 };
 
 const hasWidthMedia = function (MediaList) {
